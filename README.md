@@ -53,3 +53,23 @@ sudo ln -s /opt/tomcat/bin/startup.sh /usr/bin/starttomcat
 sudo ln -s /opt/tomcat/bin/shutdown.sh /usr/bin/stoptomcat
 
 # we can simply run starttomcat and stoptomcat
+# TOMCAT 9.0.83 COMPATIBLE WITH JENKINS
+
+sudo useradd -m -d /opt/tomcat -U -s /bin/false tomcat 
+sudo apt update 
+sudo apt install default-jdk 
+java -version 
+cd /tmp 
+sudo apt install git wget -y 
+sudo wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.83/bin/apache-tomcat-9.0.83.tar.gz 
+sudo tar xzvf apache-tomcat-9.0.83.tar.gz -C /opt/tomcat --strip-components=1 
+sudo vi /opt/tomcat/conf/tomcat-users.xml 
+sudo vi /opt/tomcat/webapps/manager/META-INF/context.xml 
+sudo vi /opt/tomcat/webapps/host-manager/META-INF/context.xml 
+sudo chmod 777 -R /opt/tomcat 
+sudo update-java-alternatives -l 
+sudo systemctl daemon-reload 
+sudo ln -s /opt/tomcat/bin/startup.sh /usr/bin/starttomcat 
+sudo ln -s /opt/tomcat/bin/shutdown.sh /usr/bin/stoptomcat 
+cd
+starttomcat
