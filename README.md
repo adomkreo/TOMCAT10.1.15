@@ -53,23 +53,24 @@ sudo ln -s /opt/tomcat/bin/startup.sh /usr/bin/starttomcat
 sudo ln -s /opt/tomcat/bin/shutdown.sh /usr/bin/stoptomcat
 
 # we can simply run starttomcat and stoptomcat
-# TOMCAT 9.0.83 COMPATIBLE WITH JENKINS
-
-sudo useradd -m -d /opt/tomcat -U -s /bin/false tomcat 
-sudo apt update 
-sudo apt install default-jdk 
-java -version 
-cd /tmp 
-sudo apt install git wget -y 
+# TOMCAT 9.0.83 on redhat server COMPATIBLE WITH JENKINS
+cd /opt  
+sudo yum install git wget -y 
+sudo yum install java-1.8.0-openjdk-devel -y 
+sudo yum install wget unzip -y 
 sudo wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.83/bin/apache-tomcat-9.0.83.tar.gz 
-sudo tar xzvf apache-tomcat-9.0.83.tar.gz -C /opt/tomcat --strip-components=1 
-sudo vi /opt/tomcat/conf/tomcat-users.xml 
-sudo vi /opt/tomcat/webapps/manager/META-INF/context.xml 
-sudo vi /opt/tomcat/webapps/host-manager/META-INF/context.xml 
-sudo chmod 777 -R /opt/tomcat 
-sudo update-java-alternatives -l 
-sudo systemctl daemon-reload 
-sudo ln -s /opt/tomcat/bin/startup.sh /usr/bin/starttomcat 
-sudo ln -s /opt/tomcat/bin/shutdown.sh /usr/bin/stoptomcat 
-cd
-starttomcat
+sudo tar -xvf apache-tomcat-9.0.83.tar.gz 
+sudo rm -rf apache-tomcat-9.0.83.tar.gz 
+sudo mv apache-tomcat-9.0.83 tomcat9 
+sudo chmod 777 -R /opt/tomcat9 
+sudo chown ec2-user -R /opt/tomcat9 
+sh /opt/tomcat9/bin/startup.sh 
+sudo ln -s /opt/tomcat9/bin/startup.sh /usr/bin/starttomcat 
+sudo ln -s /opt/tomcat9/bin/shutdown.sh /usr/bin/stoptomcat 
+sudo vi /opt/tomcat9/conf/tomcat-users.xml
+# add manager script user because he can be the only to deploy using jenins, and make sure the credentials are the same with the jenkins
+sudo vi /opt/tomcat9/webapps/manager/META-INF/context.xml
+# comment the valse
+sudo vi /opt/tomcat9/webapps/host-manager/META-INF/context.xml
+# comment valve too
+
