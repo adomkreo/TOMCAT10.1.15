@@ -21,7 +21,7 @@ sudo nano /opt/tomcat/conf/tomcat-users.xml
 sudo chmod 777 -R /opt/tomcat
 
 # from here, if you cant get access, switch to roots and
-
+# IMPORTANT: USE THE MANAGER SCRIPT USERNAME AND PASSWORD FOR JENKINS. MANAGER SCRIPT IS THE ONLY WITH PERMISSION FOR DEPLOYMENT
 vi /opt/tomcat/conf/tomcat-users.xml and add the credentials at the bottom
 -->
   <user username="admin" password="admin123" roles="manager-gui"/>
